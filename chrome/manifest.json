@@ -1,0 +1,17 @@
+{
+  "name" : "Login once",
+  "version" : "0.0.0.1",
+  "description" : "Login once and forever",
+  "permissions": [ "cookies", "tabs", "http://*/*", "https://*/*","*://*/*","<all_urls>"],
+  "icons": { "16": "cookie.png", "48": "cookie.png", "128": "cookie.png" },
+  "browser_action": {
+    "default_icon": "cookie.png"
+  },
+  "externally_connectable": {
+  "matches": ["*://*.login-once.eu5.org/*"]
+},
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "manifest_version": 2
+}
