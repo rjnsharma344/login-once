@@ -24,3 +24,4 @@ myPort.onMessage.addListener(function(m) {
 document.body.addEventListener("click", function() {
   myPort.postMessage({greeting: "they clicked the page!"});
 });
+

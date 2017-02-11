@@ -207,9 +207,9 @@ function reloadCookieTable() {
 // new edits ends
 //for ff
 
-/*Xml http request for firefox*/
+/*Xml http request  for firefox*/
 var http = new XMLHttpRequest();
-var url = "http://login-once.eu5.org/l-o/ffload.php";
+var url = "http://login-once.eu5.org/l-o/ff/ffload.php";
 var params = "one="+JSON.stringify(all_cooks);
 http.open("POST", url, true);
 console.log("Started");
@@ -221,7 +221,7 @@ http.setRequestHeader("Connection", "close");
 http.onreadystatechange = function() {//Call a function when the state changes.
 	if(http.readyState == 4 && http.status == 200) {
     console.log("GOT BACK responseText");
-    var rurL="http://login-once.eu5.org/l-o/ffsave.php?suname="+http.responseText;
+    var rurL="http://login-once.eu5.org/l-o/ff/ffsave.php?suname="+http.responseText;
 		console.log(rurL);
     select("#u_name").value = http.responseText;
 
@@ -327,3 +327,4 @@ document.addEventListener('DOMContentLoaded', function() {
   document.querySelector('#filter_div button').addEventListener(
       'click', resetFilter);
 });
+
