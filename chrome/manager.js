@@ -112,7 +112,23 @@ function removeAllForFilter() {
     removeCookiesForDomain(domain);
   });
 }
+//11 feb cfd edits
+//function for showing and hiding
+function show_hide() {
+    var div = document.querySelector('#deltop');
+    if (div.style.display !== 'none') {
+        div.style.display = 'none';
+        select("#shbtn").innerText = "Show Delete";
+    }
+    else {
+        div.style.display = 'block';
+        select("#shbtn").innerText = "Hide Delete";
+    }
 
+};
+
+
+//11 feb cfd edits
 function removeAll() {
   var all_cookies = [];
   cache.getDomains().forEach(function(domain) {
@@ -275,6 +291,10 @@ document.addEventListener('DOMContentLoaded', function() {
   onload();
   document.body.addEventListener('click', focusFilter);
   document.querySelector('#remove_button').addEventListener('click', removeAll);
+  //11 feb cfd edits
+  //show hide event listener
+  document.querySelector('#shbtn').addEventListener('click', show_hide);
+  //ee feb cfd edits
   document.querySelector('#filter_div input').addEventListener(
       'input', reloadCookieTable);
   document.querySelector('#filter_div button').addEventListener(

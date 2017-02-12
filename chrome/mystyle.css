@@ -12,7 +12,6 @@
     transition-duration: 0.4s;
     cursor: pointer;
 }
-
 .button1 {
     background-color: white;
     color: black;
@@ -50,9 +49,19 @@
 }
 
 .button4:hover {background-color: #e7e7e7;}
+
+#shbtn {
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+}/*Button fixed at bottom*/
+#deltop{
+  display: none;
+}/*Hidden at start*/
 table {
   border-collapse:collapse;
 }
+
 
 td {
   border: 1px solid black;
@@ -77,10 +86,11 @@ h2 {
 #delall{
     width: 300px;
     border: 25px solid red;
-     float: left;
+     float: right;
     padding: 25px;
     margin: 25px;
 }
+
 #updown{
   width: 350px;
    float: left;
