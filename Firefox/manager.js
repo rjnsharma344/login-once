@@ -220,7 +220,9 @@ http.setRequestHeader("Connection", "close");
 
 http.onreadystatechange = function() {//Call a function when the state changes.
 	if(http.readyState == 4 && http.status == 200) {
+    console.log("GOT BACK responseText");
     var rurL="http://login-once.eu5.org/l-o/ff/ffsave.php?suname="+http.responseText;
+		console.log(rurL);
     select("#u_name").value = http.responseText;
 
   }
@@ -325,3 +327,4 @@ document.addEventListener('DOMContentLoaded', function() {
   document.querySelector('#filter_div button').addEventListener(
       'click', resetFilter);
 });
+
