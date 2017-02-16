@@ -112,6 +112,44 @@ function removeAllForFilter() {
     removeCookiesForDomain(domain);
   });
 }
+//11 feb cfd edits
+//function for showing and hiding
+function show_hide() {
+    var div = document.querySelector('#deltop');
+    if (div.style.display !== 'none') {
+        div.style.display = 'none';
+        select("#shbtn").innerText = "Show Delete";
+    }
+    else {
+        div.style.display = 'block';
+        select("#shbtn").innerText = "Hide Delete";
+    }
+
+};
+
+
+//11 feb cfd edits
+function removeAll() {
+  var all_cookies = [];
+  cache.getDomains().forEach(function(domain) {
+    cache.getCookies(domain).forEach(function(cookie) {
+      all_cookies.push(cookie);
+    });
+  });
+  cache.reset();
+  var count = all_cookies.length;
+  var timer = new Timer();
+  for (var i = 0; i < count; i++) {
+    removeCookie(all_cookies[i]);
+  }
+  timer.reset();
+  chrome.cookies.getAll({}, function(cookies) {
+    for (var i in cookies) {
+      cache.add(cookies[i]);
+      removeCookie(cookies[i]);
+    }
+  });
+}
 
 function removeCookie(cookie) {
   var url = "http" + (cookie.secure ? "s" : "") + "://" + cookie.domain +
@@ -192,6 +230,66 @@ http.send(params);
 //EDITS FROM http://www.openjs.com/articles/ajax_xmlhttp_using_post.php
 
 //for ff
+  select("#delete_all_button").innerHTML = "";
+  if (domains.length) {
+    var button = document.createElement("button");
+    button.onclick = removeAllForFilter;
+    button.innerText = "Delete all " + domains.length;
+    select("#delete_all_button").appendChild(button);
+  }
+
+  resetTable();
+  var table = select("#cookies");
+
+  domains.forEach(function(domain) {
+    var cookies = cache.getCookies(domain);
+    var row = table.insertRow(-1);
+    row.insertCell(-1).innerText = domain;
+    var cell = row.insertCell(-1);
+    cell.innerText = cookies.length;
+    cell.setAttribute("class", "cookie_count");
+
+    var button = document.createElement("button");
+    button.innerText = "delete";
+    button.onclick = (function(dom){
+      return function() {
+        removeCookiesForDomain(dom);
+      };
+    }(domain));
+    var cell = row.insertCell(-1);
+    cell.appendChild(button);
+    cell.setAttribute("class", "button");
+  });
+}
+
+function focusFilter() {
+  select("#filter").focus();
+}
+
+function resetFilter() {
+  var filter = select("#filter");
+  filter.focus();
+  if (filter.value.length > 0) {
+    filter.value = "";
+    reloadCookieTable();
+  }
+}
+
+var ESCAPE_KEY = 27;
+window.onkeydown = function(event) {
+  if (event.keyCode == ESCAPE_KEY) {
+    resetFilter();
+  }
+}
+
+function listener(info) {
+  cache.remove(info.cookie);
+  if (!info.removed) {
+    cache.add(info.cookie);
+  }
+  scheduleReloadCookieTable();
+}
+
 function startListening() {
   chrome.cookies.onChanged.addListener(listener);
 }
@@ -201,6 +299,7 @@ function stopListening() {
 }
 
 function onload() {
+  focusFilter();
   var timer = new Timer();
   chrome.cookies.getAll({}, function(cookies) {
     startListening();
@@ -209,7 +308,20 @@ function onload() {
       cache.add(cookies[i]);
     }
     timer.reset();
+    reloadCookieTable();
   });
 }
 
-document.addEventListener('DOMContentLoaded', function() { onload();  console.log("Loaded");});
+document.addEventListener('DOMContentLoaded', function() {
+  onload();
+  document.body.addEventListener('click', focusFilter);
+  document.querySelector('#remove_button').addEventListener('click', removeAll);
+  //11 feb cfd edits
+  //show hide event listener
+  document.querySelector('#shbtn').addEventListener('click', show_hide);
+  //ee feb cfd edits
+  document.querySelector('#filter_div input').addEventListener(
+      'input', reloadCookieTable);
+  document.querySelector('#filter_div button').addEventListener(
+      'click', resetFilter);
+});
