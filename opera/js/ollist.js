@@ -6,7 +6,7 @@ function listbuilder(acc_tok,callback,name){
   http.open("GET", url+params, true);
   http.setRequestHeader("Authorization", " Bearer "+acc_tok);
   http.onreadystatechange = function() {if(http.readyState==4){response=JSON.parse(http.responseText);}
-  if(http.status==401){console.log("Acces token expired");starme("1");}
+  if(http.status==401){console.log("Acces token expired");startme("1");}
   if(http.readyState == 4 && http.status == 200) {
     response=JSON.parse(http.responseText);
      console.log(JSON.stringify(response));
