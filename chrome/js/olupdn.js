@@ -6,10 +6,9 @@ function downloadfile(acc_tok,id,callback,nojsonindrive,key){
   http.open("get", url+id+"?alt=media", true);
   http.setRequestHeader("Authorization", " Bearer "+acc_tok);
   http.onreadystatechange = function() {
-    if(http.status==401){console.log("Acces token expired");starme("1");}
+    if(http.status==401){console.log("Acces token expired");startme("1");}
+// expire
   if(http.readyState == 4 && http.status == 200) {
-    // expire
-    if(http.status==401){console.log("Acces token expired");starme("1");}
     if(id==pass.file_id){console.log("Password file");pass.drive=http.responseText;nojsonindrive("down");}
     else{
   try{
